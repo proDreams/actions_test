@@ -7,20 +7,6 @@ on:
       - opened
 
 jobs:
-  opened_notify:
-    if: github.event.action == 'opened'
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Run Telegram Notify Action
-        uses: proDreams/actions-telegram-notifier@dev
-        if: always()
-        with:
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
-          notify_fields: "actor,repository,workflow"
-
   notify:
     runs-on: ubuntu-latest
 
