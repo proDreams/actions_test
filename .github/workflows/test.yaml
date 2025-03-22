@@ -2,20 +2,38 @@ name: Test
 
 on:
   workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+      tags:
+        description: 'Test scenario tags'
+        required: false
+        type: boolean
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Workflow data
-        run: echo "${{ toJson(github.event) }}"
-#      - name: Run Telegram Notify Action
-#        uses: proDreams/actions-telegram-notifier@dev
-#        with:
-#          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-#          chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
-#          status: ${{ job.status }}
-#          notify_fields: "actor,repository,workflow,branch,repo,commit"
-#          message: "Test message."
-#          footer: "Test footer"
+#      - name: Workflow data
+#        run: echo "${{ toJson(github.event) }}"
+      - name: Run Telegram Notify Action
+        uses: proDreams/actions-telegram-notifier@dev
+        with:
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
+          status: ${{ job.status }}
+          notify_fields: "actor,repository,workflow"
+          message: "Test message."
+          footer: "Test footer"
